@@ -1,17 +1,8 @@
 {
-  "name": "react-data-grid",
-  "version": "7.0.0-canary.33",
-  "license": "MIT",
-  "description": "Excel-like grid component built with React, with editors, keyboard navigation, copy & paste, and the like",
-  "keywords": [
-    "react",
-    "react-data-grid",
-    "data-grid"
-  ],
-  "repository": "github:adazzle/react-data-grid",
-  "bugs": {
-    "url": "https://github.com/adazzle/react-data-grid/issues"
-  },
+  "name": "lola-react-spreadsheet",
+  "private": true,
+  "version": "1.0.0",
+  "repository": "github:lolatravel/lola-react-spreadsheet",
   "type": "module",
   "exports": {
     ".": {
