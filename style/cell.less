@@ -1,0 +1,206 @@
+.rdg-cell {
+  contain: strict;
+  contain: size layout style paint;
+  position: absolute;
+  height: inherit;
+  padding: 0 18px;
+  border-right: 0px solid var(--border-color);
+  border-bottom: 0px solid var(--border-color);
+  background-color: inherit;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rdg-cell-frozen {
+  position: sticky;
+  /* Should have a higher value than 0 to show up above unfrozen cells */
+  z-index: 1;
+}
+
+.rdg-cell-frozen-last {
+  box-shadow: 1px 0px 6px 1px rgba(0, 0, 0, 0.12);
+}
+
+.rdg-cell-frozen-align-right {
+    box-shadow: -1px 0px 6px 2px rgba(0, 0, 0, 0.12);
+    position: sticky;
+    z-index: 1;
+    background-color: #F7F7F8;
+    & .rdg-cell-fake-background {
+        border-right: 0;
+    }
+}
+
+.rdg-cell-frozen-align-right-no-shadow {
+    box-shadow: none;
+}
+
+.rdg-cell-selected {
+  box-shadow: none;
+}
+
+.rdg-cell-copied {
+  background-color: #f7f7f8;
+}
+
+.rdg-cell-align-right {
+    text-align: right;
+}
+
+.rdg-cell-selected {
+    & > .rdg-cell-fake-background {
+        border: 1px solid var(--selection-color);
+    }
+}
+
+.rdg-cell-disabled {
+    color: #A5A6A7;
+}
+
+.rdg-cell-error {
+    background-color: #FFFFFF;
+    color: #CC3300;
+}
+
+.rdg-cell-alert {
+    background-color: #CC3300;
+    color: #FFFFFF;
+}
+
+.rdg-cell-warning {
+    background-color: #F7C429;
+    color: #323237;
+}
+
+.rdg-warning {
+    position: absolute;
+    top: 100%;
+    z-index: 1000;
+    float: left;
+    min-width: 160px;
+    padding: 5px 0;
+    text-align: left;
+    list-style: none;
+    background-color: #F7C429;
+    color: #323237;
+    border-radius: 3px;
+    box-shadow: 0px 0px 9px 1px rgba(0, 0, 0, 0.13);
+    padding: 5px;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    max-width: 202px;
+    line-height: 17px;
+}
+
+.rdg-warning::after {
+    content: " ";
+    position: absolute;
+    top: 100%; /* At the bottom of the tooltip */
+    left: 50%;
+    margin-left: -9px;
+    border-width: 9px;
+    border-style: solid;
+    border-color: #F7C429 transparent transparent transparent;
+}
+
+.rdg-alert {
+    position: absolute;
+    top: 100%;
+    z-index: 1000;
+    float: left;
+    min-width: 160px;
+    padding: 5px 0;
+    text-align: left;
+    list-style: none;
+    background-color: #CC3300;
+    color: #FFFFFF;
+    border-radius: 3px;
+    box-shadow: 0px 0px 9px 1px rgba(0, 0, 0, 0.13);
+    padding: 5px;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    max-width: 202px;
+    line-height: 17px;
+}
+
+.rdg-alert::after {
+    content: " ";
+    position: absolute;
+    top: 100%; /* At the bottom of the tooltip */
+    left: 50%;
+    margin-left: -9px;
+    border-width: 9px;
+    border-style: solid;
+    border-color: #CC3300 transparent transparent transparent;
+}
+
+.rdg-cell-drag-handle {
+  cursor: crosshair;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 8px;
+  height: 8px;
+  background-color: var(--selection-color);
+  z-index: 11;
+
+  &:hover {
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--selection-color);
+    background-color: var(--background-color);
+  }
+}
+
+.rdg-cell-fake-background {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: transparent;
+    left: 0;
+    top: 0;
+    z-index: 10;
+    border-bottom: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+}
+
+.rdg-cell-fake-background-active {
+    border-left: 1px solid var(--selection-color);
+    border-right: 1px solid var(--selection-color);
+}
+
+.rdg-cell-fake-background-active-bottom {
+    border-bottom: 1px dashed var(--selection-color);
+}
+
+.rdg-cell-fake-background-active-top {
+    border-top: 1px dashed var(--selection-color);
+}
+
+.rdg-cell-fake-background-active-right {
+    border-right: 1px dashed var(--selection-color);
+}
+
+.rdg-cell-fake-background-active-left {
+    border-left: 1px dashed var(--selection-color);
+}
+
+.rdg-cell-dragged-over {
+  background-color: #f7f7f8;
+}
+
+.rdg-cell-copied.rdg-cell-dragged-over {
+  background-color: #f7f7f8;
+}
+
+.rdg-cell-editing {
+  padding: 0;
+}
+
+.rdg-cell-children {
+    cursor: pointer;
+}
