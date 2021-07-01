@@ -1,19 +1,16 @@
 import type { CellNavigationMode } from '../enums';
-import type { CalculatedColumn, Position, GroupRow, CellType } from '../types';
+import type { CalculatedColumn, Position, CellType } from '../types';
 
 interface IsSelectedCellEditableOpts<R, SR> {
   selectedPosition: Position;
   columns: readonly CalculatedColumn<R, SR>[];
-  rows: readonly (R | GroupRow<R>)[];
-  isGroupRow: (row: R | GroupRow<R>) => row is GroupRow<R>;
+  rows: readonly (R)[];
 }
 
-export function isSelectedCellEditable<R, SR>({ selectedPosition, columns, rows, isGroupRow }: IsSelectedCellEditableOpts<R, SR>): boolean {
+export function isSelectedCellEditable<R, SR>({ selectedPosition, columns, rows }: IsSelectedCellEditableOpts<R, SR>): boolean {
   const column = columns[selectedPosition.idx];
   const row = rows[selectedPosition.rowIdx];
   return column.editor != null
-    && !column.rowGroup
-    && !isGroupRow(row)
     && (typeof column.editable === 'function' ? column.editable(row) : column.editable) !== false;
 }
 

@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import type { CalculatedColumn, Column } from '../types';
 import type { DataGridProps } from '../DataGrid';
-import { ValueFormatter, ToggleGroupFormatter } from '../formatters';
+import { ValueFormatter } from '../formatters';
 import { SELECT_COLUMN_KEY } from '../Columns';
 
 interface ViewportColumnsArgs<R, SR> extends Pick<DataGridProps<R, SR>, 'defaultColumnOptions'> {
@@ -18,15 +18,14 @@ export function useViewportColumns<R, SR>({
   columnWidths,
   viewportWidth,
   scrollLeft,
-  defaultColumnOptions,
-  rawGroupBy
+  defaultColumnOptions
 }: ViewportColumnsArgs<R, SR>) {
   const minColumnWidth = defaultColumnOptions?.minWidth ?? 54;
   const defaultFormatter = defaultColumnOptions?.formatter ?? ValueFormatter;
   const defaultSortable = defaultColumnOptions?.sortable ?? false;
   const defaultResizable = defaultColumnOptions?.resizable ?? false;
 
-  const { columns, lastFrozenColumnIndex, totalColumnWidth, totalFrozenColumnWidth, groupBy } = useMemo(() => {
+  const { columns, lastFrozenColumnIndex, totalColumnWidth, totalFrozenColumnWidth } = useMemo(() => {
     let left = 0;
     let totalWidth = 0;
     let allocatedWidths = 0;
@@ -47,11 +46,6 @@ export function useViewportColumns<R, SR>({
 
       const column: IntermediateColumn = { ...metricsColumn, width };
 
-      if (rawGroupBy?.includes(column.key)) {
-        column.frozen = true;
-        column.rowGroup = true;
-      }
-
       if (column.frozen && !column.frozenAlignment) {
         lastFrozenColumnIndex++;
       }
@@ -63,15 +57,6 @@ export function useViewportColumns<R, SR>({
       // Sort select column first:
       if (aKey === SELECT_COLUMN_KEY) return -1;
       if (bKey === SELECT_COLUMN_KEY) return 1;
-
-      // Sort grouped columns second, following the groupBy order:
-      if (rawGroupBy?.includes(aKey)) {
-        if (rawGroupBy.includes(bKey)) {
-          return rawGroupBy.indexOf(aKey) - rawGroupBy.indexOf(bKey);
-        }
-        return -1;
-      }
-      if (rawGroupBy?.includes(bKey)) return 1;
 
       // Sort frozen columns third:
       // if (frozenA) {
@@ -90,8 +75,6 @@ export function useViewportColumns<R, SR>({
       minColumnWidth
     );
 
-    // Filter rawGroupBy and ignore keys that do not match the columns prop
-    const groupBy: string[] = [];
     const calculatedColumns: CalculatedColumn<R, SR>[] = columns.map((column, idx) => {
       // Every column should have a valid width as this stage
       const width = column.width ?? clampColumnWidth(unallocatedColumnWidth, column, minColumnWidth);
@@ -104,11 +87,6 @@ export function useViewportColumns<R, SR>({
         resizable: column.resizable ?? defaultResizable,
         formatter: column.formatter ?? defaultFormatter
       };
-
-      if (newColumn.rowGroup) {
-        groupBy.push(column.key);
-        newColumn.groupFormatter = column.groupFormatter ?? ToggleGroupFormatter;
-      }
 
       totalWidth += width;
       left = column.frozenAlignment === 'right' ? left : left + width;
@@ -125,10 +103,9 @@ export function useViewportColumns<R, SR>({
       columns: calculatedColumns,
       lastFrozenColumnIndex,
       totalFrozenColumnWidth,
-      totalColumnWidth: totalWidth,
-      groupBy
+      totalColumnWidth: totalWidth
     };
-  }, [columnWidths, defaultFormatter, defaultResizable, defaultSortable, minColumnWidth, rawColumns, rawGroupBy, viewportWidth]);
+  }, [columnWidths, defaultFormatter, defaultResizable, defaultSortable, minColumnWidth, rawColumns, viewportWidth]);
 
   const [colOverscanStartIdx, colOverscanEndIdx] = useMemo((): [number, number] => {
     // get the viewport's left side and right side positions for non-frozen columns
@@ -185,7 +162,7 @@ export function useViewportColumns<R, SR>({
     return viewportColumns;
   }, [colOverscanEndIdx, colOverscanStartIdx, columns]);
 
-  return { columns, viewportColumns, totalColumnWidth, lastFrozenColumnIndex, totalFrozenColumnWidth, groupBy };
+  return { columns, viewportColumns, totalColumnWidth, lastFrozenColumnIndex, totalFrozenColumnWidth };
 }
 
 function getSpecifiedWidth<R, SR>(

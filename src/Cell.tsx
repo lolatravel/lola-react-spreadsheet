@@ -227,8 +227,8 @@ function Cell<R, SR>({
       onMouseLeave={handleMouseLeave}
       onDoubleClick={wrapEvent(handleDoubleClick, onDoubleClick)}
       onClick={handleClickToExpand}
+      data-test-id={`${column.name || column.key}-${rowIdx}`}
     >
-      {!column.rowGroup && (
         <>
           <div
             className={clsx(
@@ -254,7 +254,6 @@ function Cell<R, SR>({
             <div className="rdg-cell-drag-handle" {...dragHandleProps} />
           )}
         </>
-      )}
       {(alert || warning) && showTooltip && createPortal(
         <div ref={setPopper} className={warning ? 'rdg-warning' : 'rdg-alert'} style={styles.popper}>{alert ?? warning}</div>,
         document.body

@@ -22,8 +22,6 @@ export interface Column<TRow, TSummaryRow = unknown> {
   formatter?: React.ComponentType<FormatterProps<TRow>>;
   /** Formatter to be used to render the summary cell content */
   summaryFormatter?: React.ComponentType<SummaryFormatterProps<TSummaryRow, TRow>>;
-  /** Formatter to be used to render the group cell content */
-  groupFormatter?: React.ComponentType<GroupFormatterProps<TRow, TSummaryRow>>;
   /** Enables cell editing. If set and no editor property specified, then a textinput will be used as the cell editor */
   editable?: boolean | ((row: TRow) => boolean);
   /** Determines whether column is frozen or not */
@@ -75,7 +73,6 @@ export interface CalculatedColumn<TRow, TSummaryRow = unknown> extends Column<TR
   resizable: boolean;
   sortable: boolean;
   isLastFrozenColumn?: boolean;
-  rowGroup?: boolean;
   formatter: React.ComponentType<FormatterProps<TRow>>;
   alignment?: string;
 }
@@ -252,25 +249,6 @@ export interface PasteEvent<TRow> {
   sourceRows: TRow[];
   targetColumnKey: string;
   targetRows: TRow[];
-}
-
-export type GroupByDictionary<TRow> = Record<string, {
-  childRows: readonly TRow[];
-  childGroups: readonly TRow[] | GroupByDictionary<TRow>;
-  startRowIndex: number;
-}>;
-
-export interface GroupRow<TRow> {
-  childRows: readonly TRow[];
-  id: string;
-  parentId: unknown;
-  groupKey: unknown;
-  isExpanded: boolean;
-  level: number;
-  posInSet: number;
-  setSize: number;
-  startRowIndex: number;
-  children: ReactElement[];
 }
 
 interface SelectCellState extends Position {

@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import type { GroupRow, GroupByDictionary } from '../types';
 
 const RENDER_BACTCH_SIZE = 8;
 
@@ -8,9 +7,6 @@ interface ViewportRowsArgs<R> {
   rowHeight: number;
   clientHeight: number;
   scrollTop: number;
-  groupBy: readonly string[];
-  rowGrouper?: (rows: readonly R[], columnKey: string) => Record<string, readonly R[]>;
-  expandedGroupIds?: ReadonlySet<unknown>;
 }
 
 // https://github.com/microsoft/TypeScript/issues/41808
@@ -22,73 +18,15 @@ export function useViewportRows<R>({
   rawRows,
   rowHeight,
   clientHeight,
-  scrollTop,
-  groupBy,
-  rowGrouper,
-  expandedGroupIds
+  scrollTop
 }: ViewportRowsArgs<R>) {
-  const [groupedRows, rowsCount] = useMemo(() => {
-    if (groupBy.length === 0 || !rowGrouper) return [undefined, rawRows.length];
+  const [rowsCount] = useMemo(() => {
+    return [rawRows.length];
+  }, [rawRows]);
 
-    const groupRows = (rows: readonly R[], [groupByKey, ...remainingGroupByKeys]: readonly string[], startRowIndex: number): [GroupByDictionary<R>, number] => {
-      let groupRowsCount = 0;
-      const groups: GroupByDictionary<R> = {};
-      for (const [key, childRows] of Object.entries(rowGrouper(rows, groupByKey))) {
-        // Recursively group each parent group
-        const [childGroups, childRowsCount] = remainingGroupByKeys.length === 0
-          ? [childRows, childRows.length]
-          : groupRows(childRows, remainingGroupByKeys, startRowIndex + groupRowsCount + 1); // 1 for parent row
-        groups[key] = { childRows, childGroups, startRowIndex: startRowIndex + groupRowsCount };
-        groupRowsCount += childRowsCount + 1; // 1 for parent row
-      }
-
-      return [groups, groupRowsCount];
-    };
-
-    return groupRows(rawRows, groupBy, 0);
-  }, [groupBy, rowGrouper, rawRows]);
-
-  const [rows, allGroupRows] = useMemo(() => {
-    const allGroupRows = new Set<unknown>();
-    if (!groupedRows) return [rawRows, allGroupRows];
-
-    const flattenedRows: Array<R | GroupRow<R>> = [];
-    const expandGroup = (rows: GroupByDictionary<R> | readonly R[], parentId: string | undefined, level: number): void => {
-      if (isReadonlyArray(rows)) {
-        flattenedRows.push(...rows);
-        return;
-      }
-      Object.keys(rows).forEach((groupKey, posInSet, keys) => {
-        // TODO: should users have control over the generated key?
-        const id = parentId !== undefined ? `${parentId}__${groupKey}` : groupKey;
-        const isExpanded = expandedGroupIds?.has(id) ?? false;
-        const { childRows, childGroups, startRowIndex } = rows[groupKey];
-
-        const groupRow: GroupRow<R> = {
-          id,
-          parentId,
-          groupKey,
-          isExpanded,
-          childRows,
-          level,
-          posInSet,
-          startRowIndex,
-          setSize: keys.length
-        };
-        flattenedRows.push(groupRow);
-        allGroupRows.add(groupRow);
-
-        if (isExpanded) {
-          expandGroup(childGroups, id, level + 1);
-        }
-      });
-    };
-
-    expandGroup(groupedRows, undefined, 0);
-    return [flattenedRows, allGroupRows];
-  }, [expandedGroupIds, groupedRows, rawRows]);
-
-  const isGroupRow = <R>(row: unknown): row is GroupRow<R> => allGroupRows.has(row);
+  const [rows] = useMemo(() => {
+    return [rawRows];
+  }, [rawRows]);
 
   const overscanThreshold = 4;
   const rowVisibleStartIdx = Math.floor(scrollTop / rowHeight);
@@ -100,7 +38,6 @@ export function useViewportRows<R>({
     rowOverscanStartIdx,
     rowOverscanEndIdx,
     rows,
-    rowsCount,
-    isGroupRow
+    rowsCount
   };
 }

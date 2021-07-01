@@ -84,11 +84,11 @@ export function LolaFeatures() {
         editor: TextEditor,
         formatter({ row, isCellSelected }) {
           const hasChildren = row.children !== undefined;
-          const style = hasChildren ? { color: '#1A60E8' } : undefined;
+          const isRemainder = row.name.value === 'Budget remainder';
           const isChild = !!row.parentId;
-          const childStyle = { marginLeft: 26 };
+          const childStyle = { marginLeft: 26, color: isRemainder ? '#a5a6a7' : '#48494a' };
           return (
-            <>
+            <div className="name-cell">
               {hasChildren && (
                 <CellExpanderFormatter
                   isCellSelected={isCellSelected}
@@ -97,11 +97,11 @@ export function LolaFeatures() {
                 />
               )}
               <div className="rdg-cell-value">
-                <div style={isChild ? childStyle : style}>
+                <div style={isChild ? childStyle : null}>
                   {isChild ? `- ${row.name.value}` : row.name.value}
                 </div>
               </div>
-            </>
+            </div>
           );
         }
       },

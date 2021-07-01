@@ -34,18 +34,5 @@ export const SelectColumn: Column<any, any> = {
         onChange={props.onRowSelectionChange}
       />
     );
-  },
-  groupFormatter(props) {
-    return (
-      <SelectCellFormatter
-        aria-label="Select Group"
-        tabIndex={-1}
-        isCellSelected={props.isCellSelected}
-        value={props.isRowSelected}
-        onChange={props.onRowSelectionChange}
-        // Stop propagation to prevent row selection
-        onClick={stopPropagation}
-      />
-    );
   }
 };
