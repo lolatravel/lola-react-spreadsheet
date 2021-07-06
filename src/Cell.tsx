@@ -42,6 +42,7 @@ function Cell<R, SR>({
   const error = typeof cell === 'object' && cell.error;
   const alert = typeof cell === 'object' && cell.alert;
   const warning = typeof cell === 'object' && cell.warning;
+  const span = typeof cell === 'object' && typeof cell.span === 'number' ? cell.span : 1;
   const { frozen } = column;
   const frozenRightAlign = column.frozenAlignment && column.frozenAlignment === 'right';
   const hasChildren = row.children && row.children.length > 0;
@@ -62,7 +63,8 @@ function Cell<R, SR>({
       'rdg-cell-error': error,
       'rdg-cell-alert': alert,
       'rdg-cell-warning': warning,
-      'rdg-cell-children': hasChildren
+      'rdg-cell-children': hasChildren,
+      'rdg-cell-span-none': !span
     },
     typeof cellClass === 'function' ? cellClass(row) : cellClass,
     className
@@ -77,6 +79,10 @@ function Cell<R, SR>({
 
   function checkIsDraggedOver(shouldCareIfDisabled?: boolean) {
     if (shouldCareIfDisabled && disabled) {
+      return false;
+    }
+
+    if (span > 1) {
       return false;
     }
 
@@ -130,7 +136,7 @@ function Cell<R, SR>({
   }
 
   function handleDoubleClick() {
-    if (!disabled && !frozen && !frozenRightAlign) {
+    if (!disabled && !frozenRightAlign) {
       selectCellWrapper(true);
     }
   }
@@ -216,11 +222,14 @@ function Cell<R, SR>({
       role="gridcell"
       aria-colindex={column.idx + 1} // aria-colindex is 1-based
       aria-selected={isCellSelected}
+      aria-colspan={span}
       ref={useCombinedRefs(cellRef, ref)}
       className={className}
       style={column.frozenAlignment === 'right' ? { width: column.width, left: gridWidth - column.width } : {
-        width: column.width,
-        left: column.left
+        width: column.width * span,
+        padding: span ? '0 18px' : 0,
+        left: column.left,
+        textAlign: span > 1 ? 'center' : 'right'
       }}
       onMouseDown={handleMouseDown}
       onMouseEnter={handleMouseEnter}
@@ -250,7 +259,7 @@ function Cell<R, SR>({
             onRowSelectionChange={onRowSelectionChange}
             onRowChange={handleRowChange}
           />
-          {dragHandleProps && !disabled && !frozenRightAlign && !frozen && (
+          {dragHandleProps && !disabled && !frozenRightAlign && !frozen && span === 1 && (
             <div className="rdg-cell-drag-handle" {...dragHandleProps} />
           )}
         </>

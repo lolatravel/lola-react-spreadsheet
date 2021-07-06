@@ -19,11 +19,12 @@ interface GetNextSelectedCellPositionOpts<R, SR> {
   columns: readonly CalculatedColumn<R, SR>[];
   rowsCount: number;
   nextPosition: Position;
+  row: R
 }
 
-export function getNextSelectedCellPosition<R, SR>({ cellNavigationMode, columns, rowsCount, nextPosition }: GetNextSelectedCellPositionOpts<R, SR>): Position {
+export function getNextSelectedCellPosition<R, SR>({ cellNavigationMode, columns, rowsCount, nextPosition, row }: GetNextSelectedCellPositionOpts<R, SR>): Position {
+  const { idx, rowIdx } = nextPosition;
   if (cellNavigationMode !== 'NONE') {
-    const { idx, rowIdx } = nextPosition;
     const columnsCount = columns.length;
     const isAfterLastColumn = idx === columnsCount;
     const isBeforeFirstColumn = idx === -1;
@@ -60,6 +61,18 @@ export function getNextSelectedCellPosition<R, SR>({ cellNavigationMode, columns
       }
     }
   }
+  const col = columns[idx];
+  const nextCell = row[col.key as keyof R] as unknown as CellType;
+
+  if (nextCell?.span === 0) {
+    const newRow = Object.entries(row).find(r => r[1]?.span > 1);
+    const newColIdx = columns.findIndex(c => newRow && c.key === newRow[0]);
+    return {
+      idx: newColIdx,
+      rowIdx
+    }
+  }
+  
 
   return nextPosition;
 }

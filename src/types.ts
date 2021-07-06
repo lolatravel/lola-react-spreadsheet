@@ -88,6 +88,7 @@ export interface CellType {
   error?: boolean;
   alert?: string;
   warning?: string;
+  span?: number;
 }
 
 export interface FormatterProps<TRow = any> {
@@ -148,6 +149,7 @@ interface SelectedCellPropsBase {
 export interface EditCellProps<TRow> extends SelectedCellPropsBase {
   mode: 'EDIT';
   editorProps: SharedEditorProps<TRow>;
+  cell?: string | CellType
 }
 
 export interface SelectedCellProps extends SelectedCellPropsBase {
