@@ -82,6 +82,10 @@ function Cell<R, SR>({
       return false;
     }
 
+    if (span > 1) {
+      return false;
+    }
+
     if (frozen ?? !isDraggedOver) {
       return false;
     }
