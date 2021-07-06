@@ -255,7 +255,7 @@ function Cell<R, SR>({
             onRowSelectionChange={onRowSelectionChange}
             onRowChange={handleRowChange}
           />
-          {dragHandleProps && !disabled && !frozenRightAlign && !frozen && !span && (
+          {dragHandleProps && !disabled && !frozenRightAlign && !frozen && span === 1 && (
             <div className="rdg-cell-drag-handle" {...dragHandleProps} />
           )}
         </>
