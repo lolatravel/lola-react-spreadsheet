@@ -805,7 +805,8 @@ function DataGrid<R, SR>({
       columns,
       rowsCount: rows.length,
       cellNavigationMode: mode,
-      nextPosition
+      nextPosition,
+      row: rows[nextPosition?.rowIdx]
     });
 
     selectCell(nextPosition);

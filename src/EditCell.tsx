@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import clsx from 'clsx';
 
 import EditorContainer from './editors/EditorContainer';
-import type { CellRendererProps, SharedEditorProps, Omit } from './types';
+import type { CellRendererProps, SharedEditorProps, Omit, CellType } from './types';
 
 type SharedCellRendererProps<R, SR> = Pick<CellRendererProps<R, SR>,
   | 'rowIdx'
@@ -12,6 +12,7 @@ type SharedCellRendererProps<R, SR> = Pick<CellRendererProps<R, SR>,
 
 interface EditCellProps<R, SR> extends SharedCellRendererProps<R, SR>, Omit<React.HTMLAttributes<HTMLDivElement>, 'style' | 'children'> {
   editorProps: SharedEditorProps<R>;
+  cell?: string | CellType
 }
 
 export default function EditCell<R, SR>({
@@ -20,9 +21,11 @@ export default function EditCell<R, SR>({
   row,
   rowIdx,
   editorProps,
+  cell,
   ...props
 }: EditCellProps<R, SR>) {
   const [dimensions, setDimensions] = useState<{ left: number; top: number } | null>(null);
+  const span = typeof cell === 'object' && typeof cell.span === 'number' ? cell.span : 1;
 
   const cellRef = useCallback(node => {
     if (node !== null) {
@@ -70,7 +73,7 @@ export default function EditCell<R, SR>({
       ref={cellRef}
       className={className}
       style={{
-        width: column.width,
+        width: column.width * span,
         left: column.left
       }}
       {...props}

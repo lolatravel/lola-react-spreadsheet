@@ -1,20 +1,28 @@
+interface DateRow {
+  value: string;
+  disabled?: boolean;
+  error?: boolean;
+  alert?: string; warning?: string,
+  span?: number
+}
+
 export interface Row {
   id: string;
   name: {value: string; disabled?: boolean};
   parentId?: string;
-  '2021-01-01': {value: string; disabled?: boolean; error?: boolean; alert?: string; warning?: string};
-  '2021-02-01': {value: string; disabled?: boolean; error?: boolean; alert?: string; warning?: string};
-  '2021-03-01': {value: string; disabled?: boolean; error?: boolean; alert?: string; warning?: string};
-  '2021-04-01': {value: string; disabled?: boolean; error?: boolean; alert?: string; warning?: string};
-  '2021-05-01': {value: string; disabled?: boolean; error?: boolean; alert?: string; warning?: string};
-  '2021-06-01': {value: string; disabled?: boolean; error?: boolean; alert?: string; warning?: string};
-  '2021-07-01': {value: string; disabled?: boolean; error?: boolean; alert?: string; warning?: string};
-  '2021-08-01': {value: string; disabled?: boolean; error?: boolean; alert?: string; warning?: string};
-  '2021-09-01': {value: string; disabled?: boolean; error?: boolean; alert?: string; warning?: string};
-  '2021-10-01': {value: string; disabled?: boolean; error?: boolean; alert?: string; warning?: string};
-  '2021-11-01': {value: string; disabled?: boolean; error?: boolean; alert?: string; warning?: string};
-  '2021-12-01': {value: string; disabled?: boolean; error?: boolean; alert?: string; warning?: string};
-  '2022-01-01': {value: string; disabled?: boolean; error?: boolean; alert?: string; warning?: string};
+  '2021-01-01': DateRow;
+  '2021-02-01': DateRow;
+  '2021-03-01': DateRow;
+  '2021-04-01': DateRow;
+  '2021-05-01': DateRow;
+  '2021-06-01': DateRow;
+  '2021-07-01': DateRow;
+  '2021-08-01': DateRow;
+  '2021-09-01': DateRow;
+  '2021-10-01': DateRow;
+  '2021-11-01': DateRow;
+  '2021-12-01': DateRow;
+  '2022-01-01': DateRow;
   children?: Row[];
   isExpanded?: boolean;
 }
@@ -367,15 +375,18 @@ export function createRows(): Row[] {
       id: '87641522069075013',
       '2021-01-01': {
         value: '$4000',
-        disabled: false
+        disabled: false,
+        span: 3
       },
       '2021-02-01': {
         value: '--',
-        disabled: true
+        disabled: true,
+        span: 0
       },
       '2021-03-01': {
         value: '--',
-        disabled: true
+        disabled: true,
+        span: 0
       },
       '2021-04-01': {
         value: '--',

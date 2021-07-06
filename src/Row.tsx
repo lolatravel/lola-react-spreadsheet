@@ -108,6 +108,7 @@ function Row<R, SR = unknown>({
               rowIdx={rowIdx}
               column={column}
               row={row}
+              cell={cell}
               onKeyDown={selectedCellProps.onKeyDown}
               editorProps={selectedCellProps.editorProps}
             />
