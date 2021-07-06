@@ -66,7 +66,6 @@ export function getNextSelectedCellPosition<R, SR>({ cellNavigationMode, columns
 
   if (nextCell?.span === 0) {
     const newRow = Object.entries(row).find(r => r[1]?.span > 1);
-    console.log(newRow);
     const newColIdx = columns.findIndex(c => newRow && c.key === newRow[0]);
     return {
       idx: newColIdx,
