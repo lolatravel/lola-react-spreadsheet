@@ -1,4 +1,4 @@
-import React, { useState, useRef, useMemo, useReducer } from 'react';
+import React, { useMemo, useReducer } from 'react';
 import DataGrid, { TextEditor } from '../../src';
 import type { Column, DataGridHandle, FillEvent, PasteEvent } from '../../src';
 import { CellExpanderFormatter } from './components/Formatters';
@@ -70,8 +70,6 @@ function reducer(rows: Row[], { type, id, newRows }: Action): Row[] {
 
 export function LolaFeatures() {
   const [rows, dispatch] = useReducer(reducer, createRows());
-  const [selectedRows, setSelectedRows] = useState(() => new Set<React.Key>());
-  const gridRef = useRef<DataGridHandle>(null);
   const columns: Column<Row>[] = useMemo(() => {
     return [
       {
@@ -176,22 +174,19 @@ export function LolaFeatures() {
   return (
     <div className="all-features">
       <DataGrid
-        ref={gridRef}
         columns={columns}
-        rows={rows}
-        rowKeyGetter={rowKeyGetter}
-        onRowsChange={handleUpdateRows}
+        enableOptionsCol
+        expandRow={handleExpandRow}
+        headerRowHeight={48}
         onFill={handleFill}
         onPaste={handlePaste}
+        onRowsChange={handleUpdateRows}
         rowHeight={60}
-        headerRowHeight={48}
-        selectedRows={selectedRows}
-        onSelectedRowsChange={setSelectedRows}
-        expandRow={handleExpandRow}
-        enableOptionsCol
+        rowKeyGetter={rowKeyGetter}
+        rows={rows}
       />
     </div>
   );
 }
 
-LolaFeatures.storyName = 'Lola Features';
+LolaFeatures.storyName = 'All Features';
