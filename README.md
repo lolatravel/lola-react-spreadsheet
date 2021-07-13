@@ -47,9 +47,9 @@ function App() {
 |:-----|:-----|:---------|:------------|
 | name | `string` | `true`  | The name of the column. This will be displayed in the header. |
 | key  | `string` | `true`  | A unique key to distinguish each column |
-| width | `number \| string` | `false`  | Column width. If not specified, will be determined automatically. |
-| minWidth | `number \| string` | `false`  | The minimum width of a column. |
-| maxWidth | `number \| string` | `false`  | The maximum width of a column. |
+| width | `number/string` | `false`  | Column width. If not specified, will be determined automatically. |
+| minWidth | `number/string` | `false`  | The minimum width of a column. |
+| maxWidth | `number/string` | `false`  | The maximum width of a column. |
 | formatter | [Formatter](#formatter) | `false`  | React component that renders the cell content. |
 | editable | `boolean` | `false`  | Whether the cells in this column are editable or not. |
 | frozen | `boolean` | `false`  | Whether this column is frozen or not. If true, column stays fixed while scrolling horizontally. |
@@ -174,7 +174,7 @@ formatter: props => <Formatter { ...props } />
 
 ### Advanced Row Props
 #### `RowItem`
-**type**: string | object
+**type**: string/object
 
 | Name | Type | Required | Description |
 |:-----|:-----|:---------|:------------|
