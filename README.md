@@ -10,7 +10,7 @@ This package uses [Storybook](https://storybook.js.org/) for development, creati
 
 At this point, [localhost:6006](http://localhost:6006/) should open up in your browser and you will be taken to the Storybook instance of the component.
 
-There is currently only one story called "All Features" which demonstrates all of the features of the spreadsheet using mocked data to mimic how it looks/feels for editing budgets. Feel free to add more stories if it would help your development process.
+There are only a couple stories at the time of writing. Feel free to add more stories if it would help your development process.
 
 ## Basic Usage
 ```jsx
