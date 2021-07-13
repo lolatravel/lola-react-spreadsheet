@@ -56,7 +56,6 @@ function App() {
 | frozenAlignment | `string` | `false`  | Which side frozen column should be pinned to. Defaults to `left` |
 | editor | [Editor](#editor) | `false`  | Editor component that is rendered when the cell is being edited. |
 | formatValue | `function` | `false`  | Formatter function to handle formatting while typing (eg. currency) |
-<br/>
 
 #### `enableOptionsCol`
 **type**: boolean
@@ -73,7 +72,6 @@ Lets the spreadsheet know that there will be a column at the end of the table th
     ]}
 />
 ```
-<br />
 
 #### `expandRow`
 **type**: function
@@ -86,7 +84,6 @@ Used to expand and collapse nested rows. Only called if a row has children. Requ
     expandRow={row => { someHandlerFunc(row.id) }}
 />
 ```
-<br />
 
 #### `headerRowHeight`
 **type**: number
@@ -99,25 +96,21 @@ The height of the header row in px.
     headerRowHeight={48}
 />
 ```
-<br />
 
 #### `onFill`
 **type**: function
 
 Function called whenever cells are filled. Can be used to create a custom callback.
-<br />
 
 #### `onPaste`
 **type**: function
 
 Function called whenever a value is pasted into a cell. Can be used to create a custom callback.
-<br />
 
 #### `onRowsChange`
 **type**: function
 
 Function that is called after any change is made to the spreadsheet.
-<br />
 
 #### `rowHeight`
 **type**: number
@@ -130,14 +123,12 @@ The height of each row in px.
     rowHeight={60}
 />
 ```
-<br />
 
 #### `rowKeyGetter`
 **type**: function
 
 Custom function that is used to return the key of a row.
 In most cases, this can simply be: `rowKeyGetter={row => row.id}`
-<br />
 
 #### `rows` (required)
 **type**: arrayOf
@@ -167,7 +158,6 @@ editor: props => <Editor { ...props } />
 | `column`  | `Column` | Reference to the current column. |
 | `top` | `number` | Top positioning of cell in px. |
 | `left` | `number` | Left positioning of cell in px. |
-<br/>
 
 #### `Formatter`
 **type**: JSX Element
@@ -181,7 +171,6 @@ formatter: props => <Formatter { ...props } />
 | `cell`  | `Cell` | Reference to the current cell. |
 | `row` | `Row` | Reference to the row which contains this cell. |
 | `isCellSelected` | `boolean` | Whether this cell is selected or not. |
-<br/>
 
 ### Advanced Row Props
 #### `RowItem`
@@ -194,4 +183,3 @@ formatter: props => <Formatter { ...props } />
 | `error` | `boolean` | `false` | If true, cell text will be red to indicate something is wrong |
 | `alert` | `string` | `false` | If string exists, cell will have a red background and tooltip that displays the alert string. |
 | `warning` | `string` | `false` | If string exists, cell will have a yellow background and tooltip that displays the alert string. |
-<br/>
