@@ -47,9 +47,9 @@ function App() {
 |:-----|:-----|:---------|:------------|
 | name | `string` | `true`  | The name of the column. This will be displayed in the header. |
 | key  | `string` | `true`  | A unique key to distinguish each column |
-| width | `number | string` | `false`  | Column width. If not specified, will be determined automatically. |
-| minWidth | `number | string` | `false`  | The minimum width of a column. |
-| maxWidth | `number | string` | `false`  | The maximum width of a column. |
+| width | `number \| string` | `false`  | Column width. If not specified, will be determined automatically. |
+| minWidth | `number \| string` | `false`  | The minimum width of a column. |
+| maxWidth | `number \| string` | `false`  | The maximum width of a column. |
 | formatter | [Formatter](#formatter) | `false`  | React component that renders the cell content. |
 | editable | `boolean` | `false`  | Whether the cells in this column are editable or not. |
 | frozen | `boolean` | `false`  | Whether this column is frozen or not. If true, column stays fixed while scrolling horizontally. |
@@ -137,10 +137,10 @@ Each Row is an object with keys that correspond to the `key` item of a Column. T
 
 | Name | Type | Required | Description |
 |:-----|:-----|:---------|:------------|
-| `id` | `string` | Technically `false`, but recommended.  | Unique id to identify each row |
-| `parentId`  | `Column` | `false` unless nested row. | Id of row under which this row is nested. |
-| `children` | [rows](#rows) | `false` unless has nested rows. | Array of rows that are nested under this row. |
-| `isExpanded` | `boolean` | `false` | Whether or not this row's children are displayed. |
+| id | `string` | Technically `false`, but recommended.  | Unique id to identify each row |
+| parentId  | `Column` | `false` unless nested row. | Id of row under which this row is nested. |
+| children | [rows](#rows) | `false` unless has nested rows. | Array of rows that are nested under this row. |
+| isExpanded | `boolean` | `false` | Whether or not this row's children are displayed. |
 | `[column.key]` | [RowItem](#rowitem) | `false` | Information for displaying cell contents based on the column. |
 <br />
 
@@ -154,10 +154,10 @@ editor: props => <Editor { ...props } />
 ```
 | Name | Type | Description |
 |:-----|:-----|:------------|
-| `rowIdx` | `number` | The row index of the cell that is being edited. |
-| `column`  | `Column` | Reference to the current column. |
-| `top` | `number` | Top positioning of cell in px. |
-| `left` | `number` | Left positioning of cell in px. |
+| rowIdx | `number` | The row index of the cell that is being edited. |
+| column  | `Column` | Reference to the current column. |
+| top | `number` | Top positioning of cell in px. |
+| left | `number` | Left positioning of cell in px. |
 
 #### `Formatter`
 **type**: JSX Element
@@ -167,10 +167,10 @@ formatter: props => <Formatter { ...props } />
 ```
 | Name | Type | Description |
 |:-----|:-----|:------------|
-| `rowIdx` | `number` | The row index of the cell that is being rendered. |
-| `cell`  | `Cell` | Reference to the current cell. |
-| `row` | `Row` | Reference to the row which contains this cell. |
-| `isCellSelected` | `boolean` | Whether this cell is selected or not. |
+| rowIdx | `number` | The row index of the cell that is being rendered. |
+| cell | `Cell` | Reference to the current cell. |
+| row | `Row` | Reference to the row which contains this cell. |
+| isCellSelected | `boolean` | Whether this cell is selected or not. |
 
 ### Advanced Row Props
 #### `RowItem`
@@ -178,8 +178,8 @@ formatter: props => <Formatter { ...props } />
 
 | Name | Type | Required | Description |
 |:-----|:-----|:---------|:------------|
-| `value` | `string` | `true` | Value of text inside cell. |
-| `disabled`  | `boolean` | `false` | If true, cell cannot be edited |
-| `error` | `boolean` | `false` | If true, cell text will be red to indicate something is wrong |
-| `alert` | `string` | `false` | If string exists, cell will have a red background and tooltip that displays the alert string. |
-| `warning` | `string` | `false` | If string exists, cell will have a yellow background and tooltip that displays the alert string. |
+| value | `string` | `true` | Value of text inside cell. |
+| disabled  | `boolean` | `false` | If true, cell cannot be edited |
+| error | `boolean` | `false` | If true, cell text will be red to indicate something is wrong |
+| alert | `string` | `false` | If string exists, cell will have a red background and tooltip that displays the alert string. |
+| warning | `string` | `false` | If string exists, cell will have a yellow background and tooltip that displays the alert string. |
