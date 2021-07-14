@@ -1,7 +1,7 @@
 {
   "name": "lola-react-spreadsheet",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "repository": "github:lolatravel/lola-react-spreadsheet",
   "type": "module",
   "exports": {
@@ -25,7 +25,7 @@
     "*.less"
   ],
   "scripts": {
-    "start": "start-storybook --quiet --no-dll -p 6006",
+    "start": "start-storybook --quiet -p 6006",
     "build": "rollup --config --no-stdin",
     "postbuild": "node --experimental-modules tools/buildStylesheets.js",
     "test": "jest",

@@ -14,7 +14,6 @@ export type {
   Column,
   CalculatedColumn,
   FormatterProps,
-  SummaryFormatterProps,
   GroupFormatterProps,
   EditorProps,
   HeaderRendererProps,

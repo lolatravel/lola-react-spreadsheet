@@ -15,17 +15,18 @@ export interface Column<TRow, TSummaryRow = unknown> {
   minWidth?: number;
   /** Maximum column width in px. */
   maxWidth?: number;
+  /** Which way text should be aligned in cell. **/
+  alignment?: string;
   cellClass?: string | ((row: TRow) => string | undefined);
   headerCellClass?: string;
-  summaryCellClass?: string | ((row: TSummaryRow) => string);
   /** Formatter to be used to render the cell content */
   formatter?: React.ComponentType<FormatterProps<TRow>>;
-  /** Formatter to be used to render the summary cell content */
-  summaryFormatter?: React.ComponentType<SummaryFormatterProps<TSummaryRow, TRow>>;
   /** Enables cell editing. If set and no editor property specified, then a textinput will be used as the cell editor */
   editable?: boolean | ((row: TRow) => boolean);
   /** Determines whether column is frozen or not */
   frozen?: boolean;
+  /** Which side frozen column should be pinned to **/
+  frozenAlignment?: string;
   /** Enable resizing of a column */
   resizable?: boolean;
   /** Enable sorting of a column */
@@ -52,8 +53,6 @@ export interface Column<TRow, TSummaryRow = unknown> {
   headerRenderer?: React.ComponentType<HeaderRendererProps<TRow, TSummaryRow>>;
   /** Component to be used to filter the data of the column */
   filterRenderer?: React.ComponentType<FilterRendererProps<TRow, any, TSummaryRow>>;
-  alignment?: string;
-  frozenAlignment?: string;
   formatValue?: (params: FormatCostShape) => string;
 }
 
@@ -99,11 +98,6 @@ export interface FormatterProps<TRow = any> {
   isRowSelected: boolean;
   onRowSelectionChange: (checked: boolean, isShiftClick: boolean) => void;
   onRowChange: (row: Readonly<TRow>) => void;
-}
-
-export interface SummaryFormatterProps<TSummaryRow, TRow = any> {
-  column: CalculatedColumn<TRow, TSummaryRow>;
-  row: TSummaryRow;
 }
 
 export interface GroupFormatterProps<TRow, TSummaryRow = unknown> {

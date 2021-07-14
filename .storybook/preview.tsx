@@ -5,9 +5,7 @@ import React, { StrictMode } from 'react';
 import { ResizeObserver as Polyfill } from '@juggle/resize-observer';
 import { addDecorator } from '@storybook/react';
 
-// @ts-expect-error
 if (typeof ResizeObserver === 'undefined') {
-  // @ts-expect-error
   window.ResizeObserver = Polyfill;
 }
 
