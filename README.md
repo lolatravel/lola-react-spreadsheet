@@ -141,7 +141,7 @@ Each Row is an object with keys that correspond to the `key` item of a Column. T
 | parentId  | `Column` | `false` unless nested row. | Id of row under which this row is nested. |
 | children | [rows](#rows) | `false` unless has nested rows. | Array of rows that are nested under this row. |
 | isExpanded | `boolean` | `false` | Whether or not this row's children are displayed. |
-| `[column.key]` | [RowItem](#rowitem) | `false` | Information for displaying cell contents based on the column. |
+| `[column.key]` | [Row](#row) | `false` | Information for displaying cell contents based on the column. |
 <br />
 
 
@@ -172,8 +172,8 @@ formatter: props => <Formatter { ...props } />
 | row | `Row` | Reference to the row which contains this cell. |
 | isCellSelected | `boolean` | Whether this cell is selected or not. |
 
-### Advanced Row Props
-#### `RowItem`
+### Row Types
+#### `Row`
 **type**: string/object
 
 | Name | Type | Required | Description |
